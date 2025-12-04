@@ -68,6 +68,138 @@ Each message document looks like:
   "createdAt": "timestamp"
 }
 ```
+Future support: delivered / seen / read receipts.
+
+---
+
+## 🎙️ 4. Voice Call System (WebRTC)
+
+WebRTC enables **peer-to-peer audio communication** between two users with low latency and high quality.
+
+### **WebRTC Call Flow**
+1. Caller initiates a call and WebRTC generates an **offer**.  
+2. The offer is sent to the backend using **Socket.IO**.  
+3. Backend forwards the offer to the receiver (signaling).  
+4. Receiver generates an **answer** and sends it back.  
+5. Both sides exchange **ICE candidates**.  
+6. Once negotiation finishes → a direct peer-to-peer audio stream is established.
+
+**Important:**  
+The server does **not** handle the audio stream. It only manages WebRTC signaling.
+
+---
+
+## 🛡️ 5. User Authentication
+
+The platform uses **secure authentication** with hashed passwords stored in MongoDB.
+
+User data structure:
+
+```json
+{
+  "username": "example",
+  "email": "example@gmail.com",
+  "password": "hashed_password",
+  "createdAt": "timestamp"
+}
+```
+Security features:
+
+1. Passwords are stored with bcrypt hashing
+2. Login compares hashed values
+3. Middleware protects private pages and routes
+
+
+---
+## 🗄️ 6. Database Structure
+
+### **Users Collection**
+Stores account information:
+- Username  
+- Email  
+- Hashed password  
+- Account creation timestamp  
+
+### **Messages Collection**
+Each message document contains:
+- `fromUser` — sender’s ObjectId  
+- `toUser` — receiver’s ObjectId  
+- `content` — text message  
+- `status` — sent / delivered  
+- `createdAt` — timestamp  
+
+### **Calls Collection**
+Stores logs for voice calls:
+- Caller ID  
+- Receiver ID  
+- Call start time  
+- Call end time  
+- Call status (completed / missed / rejected)
+
+
+---
+## ⚙️ 7. Backend Route Structure
+
+The backend is organized into modular Express.js route files:
+
+routes/
+   auth.js        → Login / Register endpoints
+   chat.js        → Message APIs
+   call.js        → Call history APIs
+
+models/
+   User.js
+   Message.js
+   Call.js
+
+middleware/
+   auth.js        → Authentication and route protection
+
+
+This structure improves readability, security, and maintainability.
+
+---
+
+## 🔐 8. HTTPS Requirement for WebRTC
+
+WebRTC requires a **secure context** (HTTPS) to work in most browsers.
+
+- The project uses **self-signed SSL certificates**  
+- HTTPS is necessary for browsers to permit microphone access  
+- Peer-to-peer audio will **not** establish without HTTPS  
+
+This ensures safe, encrypted voice communication.
+
+---
+
+## 🚧 9. Known Limitations (Current Version)
+
+- Message delivery/read receipts not implemented  
+- Voice calls may experience echo or background noise  
+- No group chat or group calling functionality  
+- No message pagination (“load older messages”)  
+- No typing indicators or online status  
+- Basic frontend (not built with modern frameworks)  
+
+These limitations are planned for future work.
+
+---
+
+## 🚀 10. Future Enhancements
+
+- Add WebRTC echo cancellation & noise reduction  
+- Implement message read receipts  
+- Add typing indicators and user online/offline status  
+- Introduce group chats and group voice calls  
+- Build a full frontend interface using React or Vue  
+- Implement JWT authentication for better security  
+- Add Docker deployment (backend + MongoDB + frontend)  
+- Improve overall UI/UX design  
+
+These upgrades will significantly boost performance, usability, and scalability.
+
+---
+
 
 
 
