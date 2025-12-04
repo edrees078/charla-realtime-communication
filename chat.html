@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="styles.css" />
+  <title>Chat Page</title>
+</head>
+<body>
+  <div id="mainContainer">
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <h2>Charla</h2>
+      <input id="searchUser" placeholder="Search for a user" />
+      <button id="searchButton">Search</button>
+
+      <h3>Private Chats:</h3>
+      <ul id="userList"></ul> <!-- Container for user list -->
+
+      <!-- Group Creation Feature -->
+      <div id="groupFeature">
+        <button id="toggleGroupCreation">Create Group</button>
+        <!-- This DIV is toggled -->
+        <div id="groupCreationBox" style="display: none;">
+          <h3>Select Users</h3>
+          <ul id="groupUserSelectionList"></ul> <!-- User list for group creation -->
+          <input id="groupNameInput" placeholder="Group Name" />
+          <button id="createGroupButton">Create</button>
+        </div>
+
+        <h3>Groups:</h3>
+        <ul id="groupList"></ul>
+      </div>
+
+      <!-- Call History -->
+      <h3>Call History</h3>
+      <div id="callHistoryContainer">
+        <ul id="callHistoryList"></ul>
+      </div>
+
+      <!-- Dark Mode Toggle Button -->
+      <button id="toggleDarkMode" class="dark-mode-button">Dark Mode</button>
+    </div>
+
+    <!-- Chat Container -->
+    <div id="chatContainer">
+      <div id="greetingHeader">
+        <span id="greeting">Welcome:</span>
+      </div>
+      <div id="chatHeader">
+        Private Chat with: <span id="currentChatPartner"></span>
+        <button id="startCallButton" style="display:none;">Call</button>
+      </div>
+      <div id="chatMessages"></div>
+      <div id="inputContainer">
+        <input type="text" id="messageInput" placeholder="Type a message..." />
+        <button id="sendButton">Send</button>
+      </div>
+      <button id="logoutButton">Logout</button>
+    </div>
+  </div>
+
+  <!-- Optional Hang Up Button (hidden) -->
+  <button id="hangUpButton" style="display:none;">Hang Up</button>
+
+  <!-- Outgoing Call Modal -->
+  <div id="outgoingCallModal" style="display:none;">
+    <div id="outgoingCallerName"></div>
+    <p>Calling...</p>
+    <button id="cancelCallButton">Cancel</button>
+  </div>
+
+  <!-- Incoming Call Modal -->
+  <div id="incomingCallModal" style="display:none;">
+    <div id="callerName"></div>
+    <p>Ringing...</p>
+    <button id="acceptCallButton">Accept</button>
+    <button id="rejectCallButton">Decline</button>
+  </div>
+
+  <!-- Call Control Panel -->
+  <div id="callControlPanel" style="display:none;">
+    <div id="callTimer">00:00</div>
+    <button id="muteToggleButton">Mute</button>
+    <button id="endCallButton">End Call</button>
+  </div>
+
+  <!-- Audio for remote stream -->
+  <audio id="remoteAudio" autoplay></audio>
+
+  <!-- Socket.IO -->
+  <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+  <!-- Main JS -->
+  <script src="chat.js"></script>
+</body>
+</html>

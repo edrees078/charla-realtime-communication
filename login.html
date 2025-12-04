@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <title>Login - Charla</title>
+</head>
+<body>
+  <div class="container">
+    <div class="form-card">
+      <h1>Login to <span>Charla</span></h1>
+      <form id="loginForm">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+        
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        
+        <button type="button" class="btn" onclick="loginUser()">Login</button>
+      </form>
+      <p>Don't have an account? <a href="/">Register here</a></p>
+    </div>
+  </div>
+
+  <script>
+    async function loginUser() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+
+      try {
+        const response = await fetch('/api/users/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          sessionStorage.setItem('token', data.token);
+          alert('Login successful!');
+          window.location.href = '/chat';
+        } else {
+          const error = await response.json();
+          alert(`Login failed: ${error.msg}`);
+        }
+      } catch (err) {
+        console.error('Error during login:', err);
+        alert('An error occurred while trying to log in.');
+      }
+    }
+  </script>
+</body>
+</html>
