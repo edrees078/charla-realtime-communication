@@ -12,6 +12,7 @@ const Message = require('./models/Message');
 const User = require('./models/User');
 const Group = require('./models/Group');
 const Calls = require('./models/Calls'); // Must exist at ./models/Calls.js
+const auth = require('./middleware/auth');
 
 const app = express();
 
@@ -103,26 +104,6 @@ async function getGroupId(groupId) {
   const groupRecord = await Group.findById(groupId, '_id');
   return groupRecord ? groupRecord._id : null;
 }
-
-/* MIDDLEWARE for /api/calls/history route:
-   (Very simple token parse, or you can use your existing JWT auth)
-*/
-const authMiddleware = async (req, res, next) => {
-  try {
-    const token = req.headers['x-auth-token'];
-    if (!token) {
-      return res.status(401).json({ msg: 'No token, authorization denied' });
-    }
-    // parse user from token (like you do in your front-end)
-    const payload = JSON.parse(
-      Buffer.from(token.split('.')[1], 'base64').toString('utf8')
-    );
-    req.user = payload.user; // { id, username, etc. }
-    next();
-  } catch (err) {
-    return res.status(401).json({ msg: 'Invalid token' });
-  }
-};
 
 /* SOCKET.IO LOGIC */
 io.on('connection', (socket) => {
@@ -396,7 +377,7 @@ app.get('/api/chats', async (req, res) => {
 });
 
 // ==== Call History: GET /api/calls/history ====
-app.get('/api/calls/history', authMiddleware, async (req, res) => {
+app.get('/api/calls/history', auth, async (req, res) => {
   try {
     // The user’s DB _id from the token
     const userId = req.user.id;
