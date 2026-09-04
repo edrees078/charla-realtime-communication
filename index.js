@@ -98,8 +98,7 @@ async function getUserIdByUsername(username) {
 
 async function getGroupId(groupId) {
   if (!mongoose.Types.ObjectId.isValid(groupId)) {
-    const groupRecord = await Group.findOne({ _id: groupId }, '_id');
-    return groupRecord ? groupRecord._id : null;
+    return null;
   }
   const groupRecord = await Group.findById(groupId, '_id');
   return groupRecord ? groupRecord._id : null;
