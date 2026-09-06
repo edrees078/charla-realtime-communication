@@ -76,8 +76,6 @@ const io = new Server(server, {
 
 app.set('io', io);
 
-app.use('/api/groups', require('./routes/groups'));
-
 // Track online users: Map of normalizedUserName -> { socketID, userID (DB _id) }
 const users = new Map();
 
