@@ -59,8 +59,8 @@ const PORT = process.env.PORT || 5000;
 
 // SSL certificate options
 const sslOptions = {
-  key: fs.readFileSync('./certs/key.pem'),   // Replace with your actual key path
-  cert: fs.readFileSync('./certs/cert.pem'), // Replace with your actual cert path
+  key: fs.readFileSync(path.join(__dirname, 'certs', 'key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'certs', 'cert.pem')),
 };
 
 // Create HTTPS server
