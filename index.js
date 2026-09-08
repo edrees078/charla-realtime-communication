@@ -26,6 +26,7 @@ app.use('/api/groups', require('./routes/groups'));
 app.use('/api/messages', require('./routes/messages'));
 
 // Serve static files
+app.use('/certs', (req, res) => res.sendStatus(404));
 app.use(express.static(path.join(__dirname)));
 
 // Serve pages
