@@ -59,7 +59,10 @@ router.post('/login', async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '2hrs' },
       (err, token) => {
-        if (err) throw err;
+        if (err) {
+          console.error('Error signing authentication token:', err.message);
+          return res.status(500).json({ msg: 'Server error' });
+        }
         res.json({ token });
       }
     );
