@@ -15,7 +15,7 @@ router.post('/register', async (req, res) => {
   }
 
   try {
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ $or: [{ email }, { username }] });
     if (user) {
       return res.status(400).json({ msg: 'User already exists' });
     }
@@ -59,7 +59,10 @@ router.post('/login', async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '2hrs' },
       (err, token) => {
-        if (err) throw err;
+        if (err) {
+          console.error('Error signing authentication token:', err.message);
+          return res.status(500).json({ msg: 'Server error' });
+        }
         res.json({ token });
       }
     );
