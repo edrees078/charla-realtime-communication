@@ -1,6 +1,7 @@
 // routes/messages.js
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const auth = require('../middleware/auth');
 const Message = require('../models/Message');
 const User = require('../models/User');
@@ -34,6 +35,10 @@ router.get('/private/:username', auth, async (req, res) => {
 // @desc  Get messages for a group
 // @access Private
 router.get('/group/:groupId', auth, async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.groupId)) {
+      return res.status(400).json({ msg: 'Invalid group ID' });
+    }
+
     try {
       const messages = await Message.find({ toGroup: req.params.groupId })
         .sort({ createdAt: 1 });
