@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Group = require('../models/Group'); // Adjust path as needed
 const auth = require('../middleware/auth'); // For route protection
 
@@ -75,6 +76,10 @@ router.get('/my-groups', auth, async (req, res) => {
 // @desc    Get group details
 // @access  Private
 router.get('/:groupId', auth, async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.groupId)) {
+    return res.status(400).json({ msg: 'Invalid group ID' });
+  }
+
   try {
     const group = await Group.findById(req.params.groupId)
       .populate('members.userID', 'username email')
