@@ -16,6 +16,10 @@ router.post('/create', auth, async (req, res) => {
     return res.status(400).json({ msg: 'Group name and at least one member ID are required.' });
   }
 
+  if (!memberIDs.every((memberID) => mongoose.Types.ObjectId.isValid(memberID))) {
+    return res.status(400).json({ msg: 'All member IDs must be valid' });
+  }
+
   try {
     // Ensure the creator is also part of the members array
     // Convert both IDs to strings for a proper comparison if necessary
