@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const auth = require('../middleware/auth');
+const Group = require('../models/Group');
 const Message = require('../models/Message');
 const User = require('../models/User');
 
@@ -40,6 +41,15 @@ router.get('/group/:groupId', auth, async (req, res) => {
     }
 
     try {
+      const isMember = await Group.exists({
+        _id: req.params.groupId,
+        'members.userID': req.user.id,
+      });
+
+      if (!isMember) {
+        return res.status(403).json({ msg: 'Access denied' });
+      }
+
       const messages = await Message.find({ toGroup: req.params.groupId })
         .sort({ createdAt: 1 });
       res.json(messages);
