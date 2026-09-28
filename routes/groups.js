@@ -85,7 +85,10 @@ router.get('/:groupId', auth, async (req, res) => {
   }
 
   try {
-    const group = await Group.findById(req.params.groupId)
+    const group = await Group.findOne({
+      _id: req.params.groupId,
+      'members.userID': req.user.id,
+    })
       .populate('members.userID', 'username email')
       .populate('createdBy', 'username email');
 
