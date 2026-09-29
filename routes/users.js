@@ -36,8 +36,8 @@ router.post('/register', async (req, res) => {
 // @desc    Authenticate user & get token
 // @access  Public
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
+  const { email, password } = req.body || {};
+  if (typeof email !== 'string' || typeof password !== 'string' || !email || !password) {
     return res.status(400).json({ msg: 'Please enter all fields' });
   }
 
