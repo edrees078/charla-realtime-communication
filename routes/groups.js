@@ -12,7 +12,12 @@ router.post('/create', auth, async (req, res) => {
 
   const { groupName, memberIDs } = req.body;
 
-  if (!groupName || !Array.isArray(memberIDs) || memberIDs.length === 0) {
+  if (
+    typeof groupName !== 'string' ||
+    !groupName.trim() ||
+    !Array.isArray(memberIDs) ||
+    memberIDs.length === 0
+  ) {
     return res.status(400).json({ msg: 'Group name and at least one member ID are required.' });
   }
 
