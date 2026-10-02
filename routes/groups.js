@@ -10,7 +10,7 @@ const auth = require('../middleware/auth'); // For route protection
 router.post('/create', auth, async (req, res) => {
   const io = req.app.get('io'); // Access the io instance inside the route handler
 
-  const { groupName, memberIDs } = req.body;
+  const { groupName, memberIDs } = req.body || {};
 
   if (
     typeof groupName !== 'string' ||
