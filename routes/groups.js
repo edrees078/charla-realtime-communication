@@ -29,7 +29,7 @@ router.post('/create', auth, async (req, res) => {
     // Ensure the creator is also part of the members array
     // Convert both IDs to strings for a proper comparison if necessary
     const creatorId = req.user.id.toString();
-    const stringMemberIDs = memberIDs.map(id => id.toString());
+    const stringMemberIDs = [...new Set(memberIDs.map((id) => id.toString()))];
 
     if (!stringMemberIDs.includes(creatorId)) {
       stringMemberIDs.push(creatorId);
