@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Group = require('../models/Group'); // Adjust path as needed
+const User = require('../models/User');
 const auth = require('../middleware/auth'); // For route protection
 
 // @route   POST /api/groups/create
@@ -33,6 +34,11 @@ router.post('/create', auth, async (req, res) => {
 
     if (!stringMemberIDs.includes(creatorId)) {
       stringMemberIDs.push(creatorId);
+    }
+
+    const existingMemberCount = await User.countDocuments({ _id: { $in: stringMemberIDs } });
+    if (existingMemberCount !== stringMemberIDs.length) {
+      return res.status(400).json({ msg: 'All members must reference existing users' });
     }
 
     const group = new Group({
