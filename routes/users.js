@@ -10,7 +10,11 @@ const auth = require('../middleware/auth'); // Import your auth middleware
 // @access  Public
 router.post('/register', async (req, res) => {
   const { username, email, password } = req.body || {};
-  if ([username, email, password].some((value) => typeof value !== 'string' || !value)) {
+  if (
+    [username, email, password].some((value) => typeof value !== 'string' || !value) ||
+    !username.trim() ||
+    !email.trim()
+  ) {
     return res.status(400).json({ msg: 'Please enter all fields' });
   }
 
