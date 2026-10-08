@@ -100,7 +100,7 @@ router.get('/verify', auth, async (req, res) => {
 // @access  Private
 router.get('/search', auth, async (req, res) => {
   const { username } = req.query;
-  if (typeof username !== 'string' || !username) {
+  if (typeof username !== 'string' || !username.trim()) {
     return res.status(400).json({ msg: 'Username is required' });
   }
   try {
