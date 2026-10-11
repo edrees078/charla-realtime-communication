@@ -18,13 +18,18 @@ router.post('/register', async (req, res) => {
     return res.status(400).json({ msg: 'Please enter all fields' });
   }
 
+  const normalizedUsername = username.trim();
+  const normalizedEmail = email.trim();
+
   try {
-    let user = await User.findOne({ $or: [{ email }, { username }] });
+    let user = await User.findOne({
+      $or: [{ email: normalizedEmail }, { username: normalizedUsername }],
+    });
     if (user) {
       return res.status(400).json({ msg: 'User already exists' });
     }
 
-    user = new User({ username, email, password });
+    user = new User({ username: normalizedUsername, email: normalizedEmail, password });
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
     await user.save();
