@@ -109,7 +109,7 @@ router.get('/search', auth, async (req, res) => {
     return res.status(400).json({ msg: 'Username is required' });
   }
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username: username.trim() });
     if (!user) {
       return res.status(404).json({ msg: 'User not found in the database.' });
     }
