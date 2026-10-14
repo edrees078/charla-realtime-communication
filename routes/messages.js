@@ -12,8 +12,13 @@ const User = require('../models/User');
 // @desc  Get messages between the authenticated user and another user
 // @access Private
 router.get('/private/:username', auth, async (req, res) => {
+  const username = req.params.username.trim();
+  if (!username) {
+    return res.status(400).json({ msg: 'Username is required' });
+  }
+
   try {
-    const otherUser = await User.findOne({ username: req.params.username });
+    const otherUser = await User.findOne({ username });
     if (!otherUser) {
       return res.status(404).json({ msg: 'User not found' });
     }
