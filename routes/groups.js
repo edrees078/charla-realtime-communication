@@ -26,6 +26,8 @@ router.post('/create', auth, async (req, res) => {
     return res.status(400).json({ msg: 'All member IDs must be valid' });
   }
 
+  const normalizedGroupName = groupName.trim();
+
   try {
     // Ensure the creator is also part of the members array
     // Convert both IDs to strings for a proper comparison if necessary
@@ -42,7 +44,7 @@ router.post('/create', auth, async (req, res) => {
     }
 
     const group = new Group({
-      groupName,
+      groupName: normalizedGroupName,
       members: stringMemberIDs.map((id) => ({ userID: id })),
       createdBy: req.user.id,
     });
@@ -51,7 +53,7 @@ router.post('/create', auth, async (req, res) => {
 
     // Emit 'newGroup' event to relevant users
     io.emit('newGroup', {
-      groupName: group.groupName,
+      groupName: normalizedGroupName,
       groupId: group._id,
       memberIDs: stringMemberIDs,
     });
