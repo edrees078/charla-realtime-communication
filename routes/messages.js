@@ -28,7 +28,7 @@ router.get('/private/:username', auth, async (req, res) => {
         { fromUser: req.user.id, toUser: otherUser._id },
         { fromUser: otherUser._id, toUser: req.user.id },
       ],
-    }).sort({ createdAt: 1 });
+    }).sort({ createdAt: 1, _id: 1 });
 
     res.json(messages);
   } catch (err) {
@@ -56,7 +56,7 @@ router.get('/group/:groupId', auth, async (req, res) => {
       }
 
       const messages = await Message.find({ toGroup: req.params.groupId })
-        .sort({ createdAt: 1 });
+        .sort({ createdAt: 1, _id: 1 });
       res.json(messages);
     } catch (err) {
       console.error('Error fetching group messages:', err);
