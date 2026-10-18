@@ -61,7 +61,7 @@ router.post('/create', auth, async (req, res) => {
     res.status(201).json({ msg: 'Group created successfully', group });
   } catch (err) {
     console.error('Error creating group:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
