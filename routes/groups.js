@@ -112,7 +112,7 @@ router.get('/:groupId', auth, async (req, res) => {
     res.json(group);
   } catch (err) {
     console.error('Error fetching group details:', err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
