@@ -129,7 +129,7 @@ router.get('/all', auth, async (req, res) => {
     res.json(users);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
