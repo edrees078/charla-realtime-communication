@@ -129,7 +129,7 @@ async function searchUser() {
     return;
   }
   try {
-    const response = await fetch(`/api/users/search?username=${usernameToSearch}`, {
+    const response = await fetch(`/api/users/search?username=${encodeURIComponent(usernameToSearch)}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
