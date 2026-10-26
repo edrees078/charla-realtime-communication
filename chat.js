@@ -276,7 +276,7 @@ function populateGroupUserSelection() {
   Array.from(userList.children).forEach((el) => {
     const li = document.createElement('li');
     li.textContent = el.textContent;
-    li.dataset.userid = el.dataset.userid;
+    li.dataset.userid = el.dataset.userId;
     li.addEventListener('click', () => li.classList.toggle('selected'));
     groupUserSelectionList.appendChild(li);
   });
