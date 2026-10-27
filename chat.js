@@ -252,7 +252,9 @@ document.getElementById('createGroupButton').addEventListener('click', async () 
       groupItem.textContent = group.groupName;
       groupItem.dataset.groupId = group._id;
       groupItem.addEventListener('click', () => openGroupChat(group._id));
-      groupList.appendChild(groupItem);
+      if (!Array.from(groupList.children).some((item) => item.dataset.groupId === group._id)) {
+        groupList.appendChild(groupItem);
+      }
 
       // Reset
       document.getElementById('groupNameInput').value = '';
@@ -428,7 +430,9 @@ socket.on('newGroup', ({ groupName, groupId, memberIDs }) => {
     li.textContent = groupName;
     li.dataset.groupId = groupId;
     li.addEventListener('click', () => openGroupChat(groupId));
-    groupList.appendChild(li);
+    if (!Array.from(groupList.children).some((item) => item.dataset.groupId === groupId)) {
+      groupList.appendChild(li);
+    }
     socket.emit('joinGroup', { groupId });
   }
 });
