@@ -357,6 +357,9 @@ async function fetchUserGroups() {
       const groups = await response.json();
       userGroupIds = groups.map((grp) => grp._id);
       renderGroups(groups);
+    } else if (response.status === 404) {
+      userGroupIds = [];
+      renderGroups([]);
     } else {
       console.error('Failed to fetch groups:', await response.text());
     }
