@@ -221,6 +221,13 @@ document.getElementById('sendButton').addEventListener('click', () => {
   }
 });
 
+document.getElementById('messageInput').addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' && !event.isComposing && !event.repeat) {
+    event.preventDefault();
+    document.getElementById('sendButton').click();
+  }
+});
+
 document.getElementById('createGroupButton').addEventListener('click', async () => {
   const groupName = document.getElementById('groupNameInput').value.trim();
   const selectedUsers = Array.from(
