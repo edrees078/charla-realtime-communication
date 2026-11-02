@@ -150,6 +150,12 @@ async function searchUser() {
   }
 }
 document.getElementById('searchButton').addEventListener('click', searchUser);
+document.getElementById('searchUser').addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' && !event.isComposing && !event.repeat) {
+    event.preventDefault();
+    document.getElementById('searchButton').click();
+  }
+});
 
 function sendMessage() {
   const messageInput = document.getElementById('messageInput');
