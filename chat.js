@@ -301,6 +301,9 @@ document.getElementById('toggleGroupCreation').addEventListener('click', () => {
   const box = document.getElementById('groupCreationBox');
   box.style.display = box.style.display === 'none' ? 'block' : 'none';
   populateGroupUserSelection();
+  if (box.style.display === 'block') {
+    document.getElementById('groupNameInput').focus();
+  }
 });
 
 function sendGroupMessage() {
