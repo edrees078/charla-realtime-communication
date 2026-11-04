@@ -292,7 +292,19 @@ function populateGroupUserSelection() {
     const li = document.createElement('li');
     li.textContent = el.textContent;
     li.dataset.userid = el.dataset.userId;
-    li.addEventListener('click', () => li.classList.toggle('selected'));
+    li.tabIndex = 0;
+    li.setAttribute('role', 'checkbox');
+    li.setAttribute('aria-checked', 'false');
+    li.addEventListener('click', () => {
+      const selected = li.classList.toggle('selected');
+      li.setAttribute('aria-checked', String(selected));
+    });
+    li.addEventListener('keydown', (event) => {
+      if ((event.key === ' ' || event.key === 'Enter') && !event.isComposing && !event.repeat) {
+        event.preventDefault();
+        li.click();
+      }
+    });
     groupUserSelectionList.appendChild(li);
   });
 }
