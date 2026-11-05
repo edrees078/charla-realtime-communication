@@ -96,7 +96,15 @@ function addUserToSidebar(user) {
     li.textContent = user.username;
     li.dataset.username = user.username;
     li.dataset.userId = user.userID;
+    li.tabIndex = 0;
+    li.setAttribute('role', 'button');
     li.addEventListener('click', () => openPrivateChat(user.username));
+    li.addEventListener('keydown', (event) => {
+      if ((event.key === 'Enter' || event.key === ' ') && !event.isComposing && !event.repeat) {
+        event.preventDefault();
+        li.click();
+      }
+    });
     userList.appendChild(li);
   }
 }
