@@ -412,7 +412,15 @@ function renderGroups(groups) {
     const li = document.createElement('li');
     li.textContent = g.groupName;
     li.dataset.groupId = g._id;
+    li.tabIndex = 0;
+    li.setAttribute('role', 'button');
     li.addEventListener('click', () => openGroupChat(g._id));
+    li.addEventListener('keydown', (event) => {
+      if ((event.key === 'Enter' || event.key === ' ') && !event.isComposing && !event.repeat) {
+        event.preventDefault();
+        li.click();
+      }
+    });
     groupList.appendChild(li);
   });
 }
