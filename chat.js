@@ -272,7 +272,15 @@ document.getElementById('createGroupButton').addEventListener('click', async () 
       const groupItem = document.createElement('li');
       groupItem.textContent = group.groupName;
       groupItem.dataset.groupId = group._id;
+      groupItem.tabIndex = 0;
+      groupItem.setAttribute('role', 'button');
       groupItem.addEventListener('click', () => openGroupChat(group._id));
+      groupItem.addEventListener('keydown', (event) => {
+        if ((event.key === 'Enter' || event.key === ' ') && !event.isComposing && !event.repeat) {
+          event.preventDefault();
+          groupItem.click();
+        }
+      });
       if (!Array.from(groupList.children).some((item) => item.dataset.groupId === group._id)) {
         groupList.appendChild(groupItem);
       }
@@ -476,7 +484,15 @@ socket.on('newGroup', ({ groupName, groupId, memberIDs }) => {
     const li = document.createElement('li');
     li.textContent = groupName;
     li.dataset.groupId = groupId;
+    li.tabIndex = 0;
+    li.setAttribute('role', 'button');
     li.addEventListener('click', () => openGroupChat(groupId));
+    li.addEventListener('keydown', (event) => {
+      if ((event.key === 'Enter' || event.key === ' ') && !event.isComposing && !event.repeat) {
+        event.preventDefault();
+        li.click();
+      }
+    });
     if (!Array.from(groupList.children).some((item) => item.dataset.groupId === groupId)) {
       groupList.appendChild(li);
     }
