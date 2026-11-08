@@ -289,6 +289,7 @@ document.getElementById('createGroupButton').addEventListener('click', async () 
       document.getElementById('groupNameInput').value = '';
       document.getElementById('groupUserSelectionList').innerHTML = '';
       document.getElementById('groupCreationBox').style.display = 'none';
+      document.getElementById('toggleGroupCreation').setAttribute('aria-expanded', 'false');
     } else {
       const error = await response.json();
       alert(`Failed to create group: ${error.msg}`);
@@ -328,6 +329,7 @@ function populateGroupUserSelection() {
 document.getElementById('toggleGroupCreation').addEventListener('click', () => {
   const box = document.getElementById('groupCreationBox');
   box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  document.getElementById('toggleGroupCreation').setAttribute('aria-expanded', String(box.style.display === 'block'));
   populateGroupUserSelection();
   if (box.style.display === 'block') {
     document.getElementById('groupNameInput').focus();
