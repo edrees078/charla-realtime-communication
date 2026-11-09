@@ -286,10 +286,14 @@ document.getElementById('createGroupButton').addEventListener('click', async () 
       }
 
       // Reset
+      const restoreGroupFocus = document.getElementById('groupCreationBox').contains(document.activeElement);
       document.getElementById('groupNameInput').value = '';
       document.getElementById('groupUserSelectionList').innerHTML = '';
       document.getElementById('groupCreationBox').style.display = 'none';
       document.getElementById('toggleGroupCreation').setAttribute('aria-expanded', 'false');
+      if (restoreGroupFocus) {
+        document.getElementById('toggleGroupCreation').focus();
+      }
     } else {
       const error = await response.json();
       alert(`Failed to create group: ${error.msg}`);
