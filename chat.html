@@ -14,8 +14,8 @@
       <input id="searchUser" spellcheck="false" autocapitalize="none" enterkeyhint="search" aria-label="Search for a user" placeholder="Search for a user" />
       <button id="searchButton">Search</button>
 
-      <h3>Private Chats:</h3>
-      <ul id="userList"></ul> <!-- Container for user list -->
+      <h3 id="privateChatsHeading">Private Chats:</h3>
+      <ul id="userList" aria-labelledby="privateChatsHeading"></ul> <!-- Container for user list -->
 
       <!-- Group Creation Feature -->
       <div id="groupFeature">
@@ -28,8 +28,8 @@
           <button id="createGroupButton">Create</button>
         </div>
 
-        <h3>Groups:</h3>
-        <ul id="groupList"></ul>
+        <h3 id="groupsHeading">Groups:</h3>
+        <ul id="groupList" aria-labelledby="groupsHeading"></ul>
       </div>
 
       <!-- Call History -->
