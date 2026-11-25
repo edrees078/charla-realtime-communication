@@ -22,8 +22,8 @@
         <button id="toggleGroupCreation" aria-controls="groupCreationBox" aria-expanded="false">Create Group</button>
         <!-- This DIV is toggled -->
         <div id="groupCreationBox" style="display: none;">
-          <h3>Select Users</h3>
-          <ul id="groupUserSelectionList"></ul> <!-- User list for group creation -->
+          <h3 id="groupUserSelectionHeading">Select Users</h3>
+          <ul id="groupUserSelectionList" aria-labelledby="groupUserSelectionHeading"></ul> <!-- User list for group creation -->
           <input id="groupNameInput" aria-label="Group Name" placeholder="Group Name" />
           <button id="createGroupButton">Create</button>
         </div>
